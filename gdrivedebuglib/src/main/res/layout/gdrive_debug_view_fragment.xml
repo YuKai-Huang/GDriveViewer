@@ -12,7 +12,7 @@
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/blue"
+            android:background="@color/dark_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
@@ -58,8 +58,9 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             app:srcCompat="@drawable/ic_add"
+            android:backgroundTint="@color/dark_gray"
             android:layout_margin="20dp"
-            app:fabSize="normal"
+            app:fabSize="mini"
             android:id="@+id/add_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,6 +87,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 app:srcCompat="@drawable/ic_create_new_folder"
+                android:backgroundTint="@color/dark_gray"
                 android:layout_margin="8dp"
                 app:elevation="4dp"
                 app:fabSize="mini"
@@ -109,6 +111,7 @@
 
         <TextView
                 android:text="Upload file"
+                android:textColor="@color/dark_gray"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -116,9 +119,10 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 app:srcCompat="@drawable/ic_cloud_upload"
+                android:backgroundTint="@color/dark_gray"
                 android:layout_margin="8dp"
                 app:elevation="4dp"
-                app:fabSize="mini"
+                app:fabSize="normal"
                 android:id="@+id/upload_file_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
