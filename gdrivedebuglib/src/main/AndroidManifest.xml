@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.ammarptn.debug.gdrive.lib">
+
+    <application>
+        <activity
+                android:name=".GDriveDebugViewActivity"
+                android:screenOrientation="portrait">
+        </activity>
+    </application>
+
+</manifest>
