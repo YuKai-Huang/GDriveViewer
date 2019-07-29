@@ -25,14 +25,18 @@ import com.ammarptn.debug.gdrive.lib.ui.gdrivedebugview.viewObject.DriveItem
 import com.ammarptn.debug.gdrive.lib.ui.gdrivedebugview.viewObject.RecycleViewBaseItem
 import com.ammarptn.gdriverest.DriveServiceHelper
 import com.ammarptn.gdriverest.DriveServiceHelper.getGoogleDriveService
+import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.drive.Drive
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.api.client.http.InputStreamContent
 import kotlinx.android.synthetic.main.gdrive_debug_view_fragment.*
 import kotlinx.android.synthetic.main.gdrive_debug_view_fragment.view.*
 import java.text.DecimalFormat
+import javax.annotation.Nullable
 
 
 class GdriveDebugViewFragment : Fragment() {
@@ -159,6 +163,12 @@ class GdriveDebugViewFragment : Fragment() {
 //            }
 
         })
+        rootView.btn_sign_out.setOnClickListener {
+            System.out.println("sign_out clicked !!!")
+            SignOut()
+        }
+
+
         return rootView
     }
 
@@ -220,6 +230,7 @@ class GdriveDebugViewFragment : Fragment() {
             // file (as opposed to a list of contacts or timezones)
             addCategory(Intent.CATEGORY_OPENABLE)
 
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             // Filter to show only images, using the image MIME data type.
             // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
             // To search for all documents available via installed storage providers,
@@ -308,6 +319,7 @@ class GdriveDebugViewFragment : Fragment() {
 
         mGoogleSignInClient = buildGoogleSignInClient()
         startActivityForResult(buildGoogleSignInClient().getSignInIntent(), REQUEST_CODE_SIGN_IN)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
@@ -412,6 +424,15 @@ class GdriveDebugViewFragment : Fragment() {
 //            updateTitle()
 
         }
+    }
+
+    //20190729 google sign out by kai
+    fun SignOut(){
+        mGoogleSignInClient = buildGoogleSignInClient()
+        mGoogleSignInClient.signOut()
+
+        System.out.println("signed out finally~")
+
     }
 
 }

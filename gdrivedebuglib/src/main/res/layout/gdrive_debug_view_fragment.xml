@@ -19,6 +19,18 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             android:layout_height="56dp"/>
 
+    <Button
+            android:text="sign out"
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_sign_out"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar"
+            app:layout_constraintHorizontal_bias="0.95"
+            android:layout_marginTop="8dp"/>
+
     <ProgressBar
             android:id="@+id/progress_bar"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
