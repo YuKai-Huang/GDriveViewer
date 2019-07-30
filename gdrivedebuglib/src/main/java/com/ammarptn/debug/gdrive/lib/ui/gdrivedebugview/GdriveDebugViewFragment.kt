@@ -262,9 +262,6 @@ class GdriveDebugViewFragment : Fragment() {
             driveServiceHelper = DriveServiceHelper(getGoogleDriveService(context, lastSignedInAccount, "DebugView"))
             queryDrive(drivePathHolder.last()?.driveId)
 
-            //0725
-            //onCreateFolder("CarView app")
-
         }
         updateTitle()
 
