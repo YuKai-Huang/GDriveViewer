@@ -256,13 +256,14 @@ class GdriveDebugViewFragment : Fragment() {
         val lastSignedInAccount = GoogleSignIn.getLastSignedInAccount(context)
         if (lastSignedInAccount == null) {
             signIn()
+
         } else {
 
             driveServiceHelper = DriveServiceHelper(getGoogleDriveService(context, lastSignedInAccount, "DebugView"))
-
-
-
             queryDrive(drivePathHolder.last()?.driveId)
+
+            //0725
+            //onCreateFolder("CarView app")
 
         }
         updateTitle()
@@ -326,6 +327,7 @@ class GdriveDebugViewFragment : Fragment() {
         when (requestCode) {
             REQUEST_CODE_SIGN_IN -> if (resultCode == Activity.RESULT_OK && resultData != null) {
                 handleSignInResult(resultData)
+
             }
             OPEN_FILE_PICKER_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK && resultData != null) {
@@ -392,8 +394,13 @@ class GdriveDebugViewFragment : Fragment() {
                 driveServiceHelper = DriveServiceHelper(getGoogleDriveService(context, googleSignInAccount, "DebugView"))
                 queryDrive(drivePathHolder.last()?.driveId)
 
+                //0725  自動新增資料夾
+                onCreateFolder("CarView app")
+
             }
             .addOnFailureListener { e -> Log.e(TAG, "Unable to sign in.", e) }
+
+
     }
 
     private fun buildGoogleSignInClient(): GoogleSignInClient {
