@@ -25,14 +25,17 @@ import com.ammarptn.debug.gdrive.lib.ui.gdrivedebugview.viewObject.DriveItem
 import com.ammarptn.debug.gdrive.lib.ui.gdrivedebugview.viewObject.RecycleViewBaseItem
 import com.ammarptn.gdriverest.DriveServiceHelper
 import com.ammarptn.gdriverest.DriveServiceHelper.getGoogleDriveService
+import com.ammarptn.gdriverest.GoogleDriveFileHolder
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.drive.Drive
+import com.google.android.gms.drive.DriveFolder
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.api.client.http.InputStreamContent
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.gdrive_debug_view_fragment.*
 import kotlinx.android.synthetic.main.gdrive_debug_view_fragment.view.*
 import java.text.DecimalFormat
@@ -51,6 +54,7 @@ class GdriveDebugViewFragment : Fragment() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var viewModel: GdriveDebugViewViewModel
     private lateinit var driveServiceHelper: DriveServiceHelper
+    //private val mGoogleDriveFileHolder = GoogleDriveFileHolder()
     private lateinit var adapter: DriveItemListAdapter
     private lateinit var rootView: View
 
@@ -258,7 +262,6 @@ class GdriveDebugViewFragment : Fragment() {
             signIn()
 
         } else {
-
             driveServiceHelper = DriveServiceHelper(getGoogleDriveService(context, lastSignedInAccount, "DebugView"))
             queryDrive(drivePathHolder.last()?.driveId)
 
@@ -266,6 +269,9 @@ class GdriveDebugViewFragment : Fragment() {
         updateTitle()
 
     }
+
+
+
 
     private fun queryDrive(driveId: String?) {
         rootView.progress_bar.visibility = View.VISIBLE
@@ -387,12 +393,10 @@ class GdriveDebugViewFragment : Fragment() {
         GoogleSignIn.getSignedInAccountFromIntent(result)
             .addOnSuccessListener { googleSignInAccount ->
 
-
                 driveServiceHelper = DriveServiceHelper(getGoogleDriveService(context, googleSignInAccount, "DebugView"))
                 queryDrive(drivePathHolder.last()?.driveId)
 
-                //0725  自動新增資料夾
-                onCreateFolder("CarView app")
+                CreateFolderNotFound("CarView app")
 
             }
             .addOnFailureListener { e -> Log.e(TAG, "Unable to sign in.", e) }
@@ -424,10 +428,19 @@ class GdriveDebugViewFragment : Fragment() {
         progress_bar.visibility = View.VISIBLE
         driveServiceHelper.createFolder(folderName, drivePathHolder.last()?.driveId).addOnSuccessListener {
             queryDrive(drivePathHolder.last()?.driveId)
-//            drivePathHolder.add(DriveHolder(it.id, folderName))
-//            updateTitle()
+            drivePathHolder.add(DriveHolder(it.id, folderName))
+            updateTitle()
 
         }
+    }
+
+    //20190813 Create "CarView app" folder if not exist
+    fun CreateFolderNotFound(folderName: String){
+        driveServiceHelper.createFolderIfNotExist(folderName, null)
+            .addOnSuccessListener{
+                queryDrive(drivePathHolder.last()?.driveId)
+                updateTitle()
+            }.addOnFailureListener { e -> Log.e(TAG, "Unable to search and create.", e) }
     }
 
     //20190729 google sign out by kai
@@ -440,3 +453,4 @@ class GdriveDebugViewFragment : Fragment() {
     }
 
 }
+
